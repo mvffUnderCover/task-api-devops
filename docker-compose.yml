@@ -29,10 +29,19 @@ services:
       postgres-db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-data:5432/taskdb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/taskdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: matar
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  task-frontend:
+    build:
+      context: ../../task-api-frontend
+    container_name: task-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - task-api
 
 volumes:
   postgres_data:
